@@ -1,6 +1,11 @@
 package whiteCollar.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -24,6 +29,8 @@ public class PictureDto extends ResponseDto{
     private String name;
     private String author;
     private BigDecimal price;
+
+    @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss a")
     private Date entryDate;
 
     public PictureDto() {

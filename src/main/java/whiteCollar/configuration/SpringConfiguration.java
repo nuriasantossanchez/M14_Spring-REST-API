@@ -76,7 +76,6 @@ public class SpringConfiguration {
      */
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
-        System.out.println("... propertyConfigInDev() ...");
         return new PropertySourcesPlaceholderConfigurer();
     }
 
@@ -91,10 +90,6 @@ public class SpringConfiguration {
     public ClientHttpRequestFactory getClientHttpRequestFactory() {
         SimpleClientHttpRequestFactory ret = new SimpleClientHttpRequestFactory();
         ret.setReadTimeout(10000); // 10 sec
-
-        System.out.println("... getClientHttpRequestFactory() ...");
-        System.out.println(ret.toString());
-        System.out.println("...........");
         return ret;
     }
 
@@ -109,10 +104,6 @@ public class SpringConfiguration {
      */
     @Bean
     public RestTemplate getRestTemplate(ClientHttpRequestFactory clientHttpRequestFactory) {
-        System.out.println(" ... getRestTemplate(clientHttpRequestFactory) ...");
-        System.out.println(clientHttpRequestFactory.toString());
-        System.out.println("...........");
-
         return new RestTemplate(clientHttpRequestFactory);
     }
 

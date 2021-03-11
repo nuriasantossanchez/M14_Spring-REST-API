@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IPictureService {
 
-    List<Picture> listPictures(List<Picture> pictures); //List All Pictures By Shop
+    //List<Picture> listPictures(List<Picture> pictures); //List All Pictures By Shop
 
     Picture savePicture(Picture picture); //Save a picture in Shop CREATE
 

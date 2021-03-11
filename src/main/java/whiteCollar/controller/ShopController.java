@@ -110,7 +110,6 @@ public class ShopController {
         return ResponseEntity
                 .created(collectionModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(collectionModel);
-
     }
 
     /**
@@ -134,12 +133,9 @@ public class ShopController {
 
         EntityModel<ShopDto> entityModel = shopModelAssembler.toModel(iShopService.saveShop(newShop));
 
-        System.out.println("New Shop: \n" + newShop.toString());
-
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
-
     }
 
     /**
@@ -166,19 +162,23 @@ public class ShopController {
         Shop shop = iShopService.findShopById(shopId)
                 .orElseThrow(() -> new ShopNotFoundException(shopId));
 
-        iPictureService.listPictures(shop.getPictures());
+        List<Picture> picturesByShop = shop.getPictures();
 
-        List<EntityModel<PictureDto>> pictures = iPictureService.listPictures(shop.getPictures()).stream()
-                .map(pictureModelAssembler::toModel)
-                .collect(Collectors.toList());
+        if (!picturesByShop.isEmpty()){
+            List<EntityModel<PictureDto>> picturesDto = picturesByShop.stream()
+                    .map(pictureModelAssembler::toModel)
+                    .collect(Collectors.toList());
 
-        CollectionModel<EntityModel<PictureDto>> collectionModel =
-                CollectionModel.of(pictures,
-                        linkTo(methodOn(ShopController.class).allPicturesByShop(shopId)).withSelfRel());
+            CollectionModel<EntityModel<PictureDto>> collectionModel =
+                    CollectionModel.of(picturesDto,
+                            linkTo(methodOn(ShopController.class).allPicturesByShop(shopId)).withSelfRel());
 
-        return ResponseEntity
-                .created(collectionModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(collectionModel);
+            return ResponseEntity
+                    .created(collectionModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                    .body(collectionModel);
+        }
+
+        return ResponseEntity.noContent().build();
 
     }
 
@@ -203,27 +203,27 @@ public class ShopController {
         Shop shop = iShopService.findShopById(shopId)
                 .orElseThrow(() -> new ShopNotFoundException(shopId));
 
-        if(shop.getCapacity() >= iShopService.shopCapacity(shopId)){
+        Long capacityAllowed = iShopService.shopCapacity(shopId);
+
+        if(shop.getCapacity() > capacityAllowed){
+            newPicture.setShop(shop);
+            EntityModel<PictureDto> entityModel = pictureModelAssembler.toModel(iPictureService.savePicture(newPicture));
+
             return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(Problem.create()
-                            .withTitle("Bad Request. The store does not have enough capacity.")
-                            .withDetail(shop.toString()));
+                    .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                    .body(entityModel);
         }
 
-        newPicture.setShop(shop);
-        EntityModel<PictureDto> entityModel = pictureModelAssembler.toModel(iPictureService.savePicture(newPicture));
-
-        System.out.println("New Picture: \n" + newPicture.toString());
-
         return ResponseEntity
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(entityModel);
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Problem.create()
+                        .withTitle("The store does not have enough capacity. Please select another shop")
+                        .withDetail(shop.toString()));
 
     }
 
     /**
-     * Representa el mapeo de una peticion HTTP DELETE, a la URL http://localhost:8181/employees/{valor numerico}
+     * Representa el mapeo de una peticion HTTP DELETE, a la URL http://localhost:8081/employees/{valor numerico}
      *
      * Accede a la capa de servicio EmployeeServiceImpl mediante su interface IEmployeeService
      * y hace uso de los metodos 'findEmployeeById(id)' para recuperar el objeto de tipo EmployeeDto,
@@ -237,11 +237,8 @@ public class ShopController {
      */
     @DeleteMapping("/shops/{id}/pictures")
     public ResponseEntity<?> deletePicturesByShop(@PathVariable(name="id") Long shopId) {
-
         Shop shop = iShopService.findShopById(shopId)
                 .orElseThrow(() -> new ShopNotFoundException(shopId));
-
-        System.out.println("Pictures deleted: \n"+ shop.toString());
 
         iPictureService.firePictures(shop.getPictures());
 

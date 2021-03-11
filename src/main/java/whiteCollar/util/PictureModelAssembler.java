@@ -10,6 +10,10 @@ import whiteCollar.controller.ShopController;
 import whiteCollar.dto.PictureDto;
 import whiteCollar.entity.Picture;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -59,11 +63,12 @@ public class PictureModelAssembler implements RepresentationModelAssembler<Pictu
         PictureDto pictureDto = convertToDto(picture);
 
         return EntityModel.of(pictureDto,
+                linkTo(methodOn(ShopController.class).newPicture(picture, picture.getShop().getId())).withSelfRel(),
                 linkTo(methodOn(ShopController.class).deletePicturesByShop(picture.getShop().getId())).withRel("delete"),
                 linkTo(methodOn(ShopController.class).allPicturesByShop(picture.getShop().getId())).withRel("all"));
     }
 
-    public PictureDto convertToDto(Picture picture) {
+    public PictureDto convertToDto(Picture picture){
         PictureDto pictureDto = modelMapper.map(picture, PictureDto.class);
         return pictureDto;
     }

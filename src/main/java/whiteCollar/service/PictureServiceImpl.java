@@ -30,11 +30,14 @@ public class PictureServiceImpl implements IPictureService {
     @Autowired
     IPictureRepository iPictureRepository;
 
+    /*
     @Override
     public List<Picture> listPictures(List<Picture> pictures) {
         return iPictureRepository.findAllById(pictures.stream()
                 .map(p -> p.getId()).collect(Collectors.toUnmodifiableList()));
     }
+
+     */
 
     @Override
     public Picture savePicture(Picture picture) {
@@ -43,6 +46,6 @@ public class PictureServiceImpl implements IPictureService {
 
     @Override
     public void firePictures(List<Picture> pictures) {
-        iPictureRepository.deleteAll(pictures);
+        iPictureRepository.deleteInBatch(pictures);
     }
 }

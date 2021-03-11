@@ -10,6 +10,7 @@ import whiteCollar.controller.ShopController;
 import whiteCollar.dto.ShopDto;
 import whiteCollar.entity.Shop;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
@@ -56,7 +57,7 @@ public class ShopModelAssembler implements RepresentationModelAssembler<Shop, En
         ShopDto shopDto = convertToDto(shop);
 
         return EntityModel.of(shopDto,
-                WebMvcLinkBuilder.
+                        linkTo(methodOn(ShopController.class).newShop(shop)).withSelfRel(),
                         linkTo(methodOn(ShopController.class).allShops()).withRel("all"));
     }
 

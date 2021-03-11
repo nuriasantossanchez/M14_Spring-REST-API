@@ -5,6 +5,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -29,28 +31,36 @@ public class Picture implements Serializable {
     private Long id;
 
     @Column(name = "name")//no hace falta si se llama igual
-    @NotEmpty(message = "\"Picture Name\" is required")
+    @NotEmpty(message = "name is required")
     private String name;
 
     @Column(name = "author")//no hace falta si se llama igual
-    @NotEmpty(message = "\"Picture Author\" is required")
+    @NotEmpty(message = "author is required")
     private String author;
 
     @Column(name = "price")//no hace falta si se llama igual
-    @NotEmpty(message = "\"Picture Price\" is required")
+    @NotNull(message = "price is required")
     private BigDecimal price;
 
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "entryDate")//no hace falta si se llama igual
-    //@NotEmpty(message = "\"Picture Entry Date\" is required")
+    @Column(name = "entry_date"
+    )
     private Date entryDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="shop_id")
-    //@NotNull(message = "\"picture\" with a {\"id\"} element is required")
     private Shop shop;
 
     public Picture() {
+    }
+
+    @PrePersist
+    void preInsert() {
+        if (this.entryDate == null) {
+            LocalDateTime localDateTime = LocalDateTime.now();
+            Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            this.entryDate = date;
+        }
     }
 
     public Long getId() {
@@ -101,15 +111,6 @@ public class Picture implements Serializable {
         this.shop = shop;
     }
 
-    @Override
-    public String toString() {
-        return "\nPicture {" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", author='" + author + '\'' +
-                ", price=" + price +
-                ", entryDate=" + entryDate +
-                ", shop=" + shop +
-                '}';
-    }
+
+
 }

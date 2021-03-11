@@ -5,7 +5,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -60,9 +59,6 @@ public class WebMVCConfiguration implements WebMvcConfigurer {
      */
    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        System.out.println("... addResourceHandlers(ResourceHandlerRegistry registry) ...");
-        System.out.println(registry.toString());
-        System.out.println("...........");
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
     }
@@ -85,10 +81,6 @@ public class WebMVCConfiguration implements WebMvcConfigurer {
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setTimeZone(TimeZone.getDefault());
-
-        System.out.println("... getObjectMapper() ...");
-        System.out.println(mapper.getDateFormat());
-        System.out.println("...........");
         return mapper;
     }
 
@@ -100,7 +92,6 @@ public class WebMVCConfiguration implements WebMvcConfigurer {
      */
     @Bean
     public ModelMapper getModelMapper() {
-        System.out.println("... getModelMapper() ...");
         return new ModelMapper();
     }
 

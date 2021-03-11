@@ -2,6 +2,7 @@ package whiteCollar.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Shop implements Serializable {
 
 
     @Column(name = "capacity")
-    @NotEmpty(message = "\"Shop Capacity\" is required")
+    @NotNull(message = "\"Shop Capacity\" is required")
     private Long capacity;
 
     @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
@@ -70,13 +71,5 @@ public class Shop implements Serializable {
         this.pictures = pictures;
     }
 
-    @Override
-    public String toString() {
-        return "Shop{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", capacity=" + capacity +
-                ", pictures=" + pictures +
-                '}';
-    }
+
 }
