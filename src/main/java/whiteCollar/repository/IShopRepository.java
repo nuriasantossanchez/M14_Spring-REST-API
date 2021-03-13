@@ -7,7 +7,7 @@ import whiteCollar.entity.Shop;
 
 
 /**
- * Interface de la capa Repository, extiende CrudRepository
+ * Interface de la capa Repository, extiende JpaRepository
  *
  */
 @Repository

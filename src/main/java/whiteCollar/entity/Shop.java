@@ -21,6 +21,7 @@ public class Shop implements Serializable {
 
     //Atributos de entidad Shop
     @Id
+    @Column(name = "id_shop")
     @GeneratedValue(strategy = GenerationType.IDENTITY) //busca ultimo valor e incrementa desde id final de db
     private Long id;
 
@@ -33,7 +34,7 @@ public class Shop implements Serializable {
     @NotNull(message = "\"Shop Capacity\" is required")
     private Long capacity;
 
-    @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shop", fetch = FetchType.LAZY)
     private List<Picture> pictures;
 
     public Shop() {

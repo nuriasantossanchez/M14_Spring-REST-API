@@ -19,6 +19,7 @@ import whiteCollar.util.PictureModelAssembler;
 import whiteCollar.util.ShopModelAssembler;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -162,7 +163,7 @@ public class ShopController {
         Shop shop = iShopService.findShopById(shopId)
                 .orElseThrow(() -> new ShopNotFoundException(shopId));
 
-        List<Picture> picturesByShop = shop.getPictures();
+        List<Picture> picturesByShop = iPictureService.listPicturesByShop(shop);
 
         if (!picturesByShop.isEmpty()){
             List<EntityModel<PictureDto>> picturesDto = picturesByShop.stream()
@@ -179,7 +180,6 @@ public class ShopController {
         }
 
         return ResponseEntity.noContent().build();
-
     }
 
     /**
@@ -203,10 +203,14 @@ public class ShopController {
         Shop shop = iShopService.findShopById(shopId)
                 .orElseThrow(() -> new ShopNotFoundException(shopId));
 
-        Long capacityAllowed = iShopService.shopCapacity(shopId);
+        //Long currentCapacity = shop.getPictures().stream().count();
+        Long currentCapacity = iShopService.currentShopCapacity(shopId);
 
-        if(shop.getCapacity() > capacityAllowed){
+        if(shop.getCapacity() > currentCapacity){
+            Long maxValue = shop.getPictures().stream().map(p -> p.getId()).max(Comparator.naturalOrder()).orElseGet(()-> 0L);
+            newPicture.setId(maxValue+1);
             newPicture.setShop(shop);
+            newPicture.setIdShop(shopId);
             EntityModel<PictureDto> entityModel = pictureModelAssembler.toModel(iPictureService.savePicture(newPicture));
 
             return ResponseEntity
@@ -217,8 +221,8 @@ public class ShopController {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Problem.create()
-                        .withTitle("The store does not have enough capacity. Please select another shop")
-                        .withDetail(shop.toString()));
+                        .withTitle("Please select another shop.")
+                        .withDetail("The store does not have enough capacity."));
 
     }
 

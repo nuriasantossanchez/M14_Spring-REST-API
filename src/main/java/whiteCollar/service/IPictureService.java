@@ -1,6 +1,7 @@
 package whiteCollar.service;
 
 import whiteCollar.entity.Picture;
+import whiteCollar.entity.Shop;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface IPictureService {
 
-    //List<Picture> listPictures(List<Picture> pictures); //List All Pictures By Shop
+    public List<Picture> listPicturesByShop(Shop shop);  //List All Pictures By Shop
 
     Picture savePicture(Picture picture); //Save a picture in Shop CREATE
 

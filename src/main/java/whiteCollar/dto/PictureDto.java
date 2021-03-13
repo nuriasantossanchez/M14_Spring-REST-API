@@ -26,6 +26,7 @@ import java.util.Date;
 public class PictureDto extends ResponseDto{
 
     private Long id;
+    private Long idShop;
     private String name;
     private String author;
     private BigDecimal price;
@@ -42,6 +43,14 @@ public class PictureDto extends ResponseDto{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getIdShop() {
+        return idShop;
+    }
+
+    public void setIdShop(Long idShop) {
+        this.idShop = idShop;
     }
 
     public String getName() {

@@ -2,22 +2,25 @@ DROP TABLE IF EXISTS `picture`;
 DROP table IF EXISTS  `shop`;
 
 CREATE TABLE `shop` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_shop` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(250) NOT NULL DEFAULT '',
-  `capacity` int(11) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `capacity` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id_shop`)
 );
 
+
+
 CREATE TABLE `picture` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_picture` int(11) NOT NULL,
+  `id_shop` int(11) NOT NULL,
   `name` varchar(250) NOT NULL,
   `author` varchar(250) NOT NULL DEFAULT 'ANONYMOUS',
-  `price` decimal(9,2) NOT NULL DEFAULT 0.00,
+  `price` decimal(15,2) NOT NULL DEFAULT 0.00,
   `entry_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `shop_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `picture_fk` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`id`)
+  PRIMARY KEY (`id_shop`,`id_picture`),
+  CONSTRAINT `picture_fk` FOREIGN KEY (`id_shop`) REFERENCES `shop` (`id_shop`)
 );
+
 
 
 

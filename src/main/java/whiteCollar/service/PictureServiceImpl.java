@@ -3,6 +3,7 @@ package whiteCollar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import whiteCollar.entity.Picture;
+import whiteCollar.entity.Shop;
 import whiteCollar.repository.IPictureRepository;
 
 import java.util.Collections;
@@ -30,14 +31,11 @@ public class PictureServiceImpl implements IPictureService {
     @Autowired
     IPictureRepository iPictureRepository;
 
-    /*
-    @Override
-    public List<Picture> listPictures(List<Picture> pictures) {
-        return iPictureRepository.findAllById(pictures.stream()
-                .map(p -> p.getId()).collect(Collectors.toUnmodifiableList()));
-    }
 
-     */
+    @Override
+    public List<Picture> listPicturesByShop(Shop shop) {
+        return iPictureRepository.findPicturesByShop(shop);
+    }
 
     @Override
     public Picture savePicture(Picture picture) {

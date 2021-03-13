@@ -23,11 +23,17 @@ import java.util.Date;
  */
 @Entity
 @Table(name="picture") //en caso que la tabla sea diferente
+@IdClass(PictureShopPk.class)
 public class Picture implements Serializable {
 
     //Atributos de entidad Picture
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//busca ultimo valor e incrementa desde id final de db
+    @Column(name = "id_shop")
+    private Long idShop;
+
+    @Id
+    @Column(name = "id_picture")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name")//no hace falta si se llama igual
@@ -43,12 +49,11 @@ public class Picture implements Serializable {
     private BigDecimal price;
 
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "entry_date"
-    )
+    @Column(name = "entry_date")
     private Date entryDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="shop_id")
+    @JoinColumn(name="id_shop", insertable = false, updatable = false)
     private Shop shop;
 
     public Picture() {
@@ -61,6 +66,14 @@ public class Picture implements Serializable {
             Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
             this.entryDate = date;
         }
+    }
+
+    public Long getIdShop() {
+        return idShop;
+    }
+
+    public void setIdShop(Long idShop) {
+        this.idShop = idShop;
     }
 
     public Long getId() {

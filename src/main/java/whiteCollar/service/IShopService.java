@@ -18,6 +18,6 @@ public interface IShopService {
 
     Optional<Shop> findShopById(Long id); //Find a Shop by Id READ
 
-    Long shopCapacity(Long id); //Get the capacity of a Shop
+    Long currentShopCapacity(Long idShop); //Get the current capacity of a Shop
 
 }

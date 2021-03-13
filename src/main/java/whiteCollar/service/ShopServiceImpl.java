@@ -45,7 +45,7 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
-    public Long shopCapacity(Long id) {
-        return iShopRepository.findById(id).get().getPictures().stream().count();
+    public Long currentShopCapacity(Long idShop) {
+        return iShopRepository.findById(idShop).get().getPictures().stream().count();
     }
 }
