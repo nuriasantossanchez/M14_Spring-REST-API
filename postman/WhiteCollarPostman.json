@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "d94a9749-2c97-4a1d-aa79-cec21e29200e",
+		"name": "WhiteCollarPostman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /shops",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /shops/{id}/pictures",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/shops/2/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"2",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_koByNoFindShop /shops/{id}/pictures",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/shops/20/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"20",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_afterDELETE /shops/{id}/pictures",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/shops/3/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"3",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_beforeDELETE /shops/{id}/pictures",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/shops/3/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"3",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /shops",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Green Collar\",\r\n    \"capacity\":20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST_koByRequesBody /shops",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /shops/{id}/pictures",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Cafe Terrace at Night\",\r\n    \"author\":\"Vincent Van Gogh\",\r\n    \"price\":11104200000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops/2/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"2",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST_ anonymous /shops/{id}/pictures",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"En el Eden\",\r\n    \"author\":\"\",\r\n    \"price\":11700000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops/2/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"2",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST_koByShopCapacity /shops/{id}/pictures",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Bandera\",\r\n    \"author\":\"Jasper Johns\",\r\n    \"price\":110000000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops/3/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"3",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST_afterDELETE /shops/{id}/pictures",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Bandera\",\r\n    \"author\":\"Jasper Johns\",\r\n    \"price\":110000000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops/3/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"3",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST_koByRequestBody /shops/{id}/pictures",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"author\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops/1/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"1",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /shops/{id}/pictures",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/shops/3/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"3",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
