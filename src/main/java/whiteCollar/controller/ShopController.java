@@ -47,7 +47,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  * @GetMapping
  * Anotacion compuesta que actua como un atajo para @RequestMapping(method = RequestMethod.GET).
  * El punto de acceso a la peticion sera http://localhost:8081/{path}, en este caso
- * (el puerto 8181 queda especificado en el archivo application.properties, del directorio resources)
+ * (el puerto 8081 queda especificado en el archivo application.properties, del directorio resources)
  *
  * @PostMapping
  * Anotacion compuesta que actua como un atajo para @RequestMapping(method = RequestMethod.POST).
@@ -67,16 +67,19 @@ public class ShopController {
     private final PictureModelAssembler pictureModelAssembler;
 
     /**
-     * Constructor de la clase, parametrizado con las interfaces IEmployeeService, IRoleService y la clase
-     * RoleModelAssembler, que implementa la interface RepresentationModelAssembler
+     * Constructor de la clase, parametrizado con las interfaces IShopService, IPictureService y las clases
+     * ShopModelAssembler y PictureModelAssembler, que implementan la interface RepresentationModelAssembler
      * Marcado con la anotacion @Autowired, la clase controlador es automaticamente detectada por Spring
-     *  @param iShopService, interfaz de tipo IEmployeeService, implementada por la clase EmployeeServiceImpl,
-     *                          en la que se exponen los servicios o funcionalidades accesibles via HTTP
-     * @param iPictureService, interfaz de tipo IRoleService, implementada por la clase RoleServiceImpl,
+     *  @param iShopService, interfaz de tipo IShopService, implementada por la clase ShopServiceImpl,
      *                      en la que se exponen los servicios o funcionalidades accesibles via HTTP
-     * @param pictureModelAssembler, instancia de tipo EmployeeModelAssembler, convierte un objeto de dominio en un
- *                            RepresentationModel, esto es, un EntityModel que envuelve al objeto de dominio
-     * @param shopModelAssembler
+     * @param iPictureService, interfaz de tipo IPictureService, implementada por la clase PictureServiceImpl,
+     *                      en la que se exponen los servicios o funcionalidades accesibles via HTTP
+     * @param shopModelAssembler, instancia de tipo ShopModelAssembler, convierte un objeto de dominio en
+     *                          un RepresentationModel, esto es, un EntityModel que envuelve al objeto de dominio
+     *                          y lo agrega enlaces
+     * @param pictureModelAssembler, instancia de tipo PictureModelAssembler, convierte un objeto de dominio en
+     *                            un RepresentationModel, esto es, un EntityModel que envuelve al objeto de dominio
+     *                            y lo agrega enlaces
      */
     @Autowired
     public ShopController(IShopService iShopService, IPictureService iPictureService,
@@ -88,14 +91,16 @@ public class ShopController {
     }
 
     /**
-     * Representa el mapeo de una peticion HTTP GET, a la URL http://localhost:8081/shops
+     * Representa el mapeo de una peticion HTTP GET, a la URL
+     * http://localhost:8081/shops
      *
      * Accede a la capa de servicio ShopServiceImpl mediante su interface IShopService
-     * y hace uso del metodo 'listShops()' para recuperar un listado de tipos ShopDto
-     * en forma de ResponseEntity, esto es, agregando enlaces al objeto de dominio
+     * y hace uso del servicio 'listShops()' para recuperar un listado de tipos Shop
+     * en forma de ResponseEntity, esto es, modelando el objeto de dominio a objeto DTO
+     * y agregando enlaces al objeto de dominio
      *
      * @return objeto generico de tipo ResponseEntity, formado por un listado de tipos ShopDto,
-     * que contiene todos los empleados disponibles en el sistema, junto con enlaces agregados
+     * que contiene todos las tiendas que hay en el sistema, junto con enlaces agregados
      */
     @GetMapping("/shops")
     public ResponseEntity<?> allShops(){
@@ -114,20 +119,21 @@ public class ShopController {
     }
 
     /**
-     * Representa el mapeo de una peticion HTTP POST, a la URL http://localhost:8081/shops
+     * Representa el mapeo de una peticion HTTP POST, a la URL
+     * http://localhost:8081/shops
      *
      * Accede a la capa de servicio ShopServiceImpl mediante su interface IShopService
-     * y hace uso del metodo 'saveShop(newShop)' para salvar el nuevo objeto creado,
-     * de tipo ShopDto, en forma de ResponseEntity, esto es, agregando enlaces al objeto
-     * de dominio
+     * y hace uso del servicio 'saveShop(newShop)' para salvar el nuevo objeto creado,
+     * de tipo Shop, y lo retorna en forma de ResponseEntity, esto es, modelando el objeto
+     * de dominio a objeto DTO y agregando enlaces
      *
      * @param newShop, tipo Shop anotado con @RequestBody para indicar que el parametro de metodo
-     *                     debe estar vinculada al cuerpo de la solicitud web.
-     *                     El cuerpo de la solicitud se pasa en formato JSON, segun el tipo de contenido de la solicitud.
-     *                     Se aplica la validacion automatica anotando el argumento con @Valid
+     *                 debe estar vinculada al cuerpo de la solicitud web.
+     *                 El cuerpo de la solicitud se pasa en formato JSON, segun el tipo de contenido de la solicitud.
+     *                 Se aplica la validacion automatica anotando el argumento con @Valid
      *
-     * @return objeto generico de tipo ResponseEntity, formado por un objeto de tipo EmployeeDto,
-     * que contiene el nuevo empleado creado, junto con enlaces agregados
+     * @return objeto generico de tipo ResponseEntity, formado por un objeto de tipo ShopDto,
+     * que contiene la nueva tienda creada, junto con enlaces agregados
      */
     @PostMapping("/shops")
     public ResponseEntity<?> newShop(@Valid @RequestBody Shop newShop) {
@@ -144,18 +150,23 @@ public class ShopController {
      * http://localhost:8081/shops/{id}/pictures
      *
      * Accede a la capa de servicio ShopServiceImpl mediante su interface IShopService
-     * y hace uso del metodo 'findShopById(shopId)' para recuperar un objeto de tipo Shop.
+     * y hace uso del servicio 'findShopById(shopId)' para recuperar un objeto de tipo Shop
+     * cuyo id coincida con el shopId pasado en el PathVariable
      *
-     * Despues accede a la capa de servicio PictureServiceImpl mediante su interface
-     * IPictureService y hace uso del metodo 'listPicturesByShop(shopId)' para recuperar
-     * un listado de tipos PictureDto asociado al {id} pasado en el PathVariable y que se
-     * corresponde con un objeto Shop concreto.
-     *
-     * En caso de que no existiese ningun objeto Shop con el id especificado,
+     * En caso de que no existiese ningun objeto Shop con el shopId especificado,
      * lanza una exception
      *
-     * @return objeto generico de tipo ResponseEntity, formado por un listado de tipos ShopDto,
-     * que contiene todos los empleados disponibles en el sistema, junto con enlaces agregados
+     * Despues accede a la capa de servicio PictureServiceImpl mediante su interface
+     * IPictureService y hace uso del servicio 'listPicturesByShop(shop)' para recuperar
+     * un listado de tipos Picture asociados al objeto de tipo Shop pasado como parametro
+     * y cuyo id coincide con el shopId pasado en el PathVariable
+     *
+     * @param shopId, tipo Long anotado con @PathVariable para indicar que es un parametro de metodo
+     *                y debe estar vinculado a una variable de tipo plantilla de URI (URI template)
+     *                Indica el id de la tienda de la que se quiere recuperar el listado de cuadros asociados
+     *
+     * @return objeto generico de tipo ResponseEntity, formado por un listado de tipos PictureDto,
+     * que contiene todos los cuadros disponibles en una tienda determinada, junto con enlaces agregados
      */
     @GetMapping("/shops/{id}/pictures")
     public ResponseEntity<?> allPicturesByShop(@PathVariable(name="id") Long shopId){
@@ -183,19 +194,35 @@ public class ShopController {
     }
 
     /**
-     * Representa el mapeo de una peticion HTTP POST, a la URL http://localhost:8081/shops
+     * Representa el mapeo de una peticion HTTP POST, a la URL
+     * http://localhost:8081/shops/{id}/pictures
      *
      * Accede a la capa de servicio ShopServiceImpl mediante su interface IShopService
-     * y hace uso del metodo 'saveShop(newShop)' para salvar el nuevo objeto creado,
-     * de tipo ShopDto, en forma de ResponseEntity, esto es, agregando enlaces al objeto de dominio
+     * y hace uso del servicio 'findShopById(shopId)' para recuperar un objeto de tipo Shop
+     * cuyo id coincida con el shopId pasado en el PathVariable
      *
-     * @param newPicture, tipo Shop anotado con @RequestBody para indicar que el parametro de metodo
-     *                     debe estar vinculada al cuerpo de la solicitud web.
-     *                     El cuerpo de la solicitud se pasa en formato JSON, segun el tipo de contenido de la solicitud.
-     *                     Se aplica la validacion automatica anotando el argumento con @Valid
+     * En caso de que no existiese ningun objeto Shop con el shopId especificado en el PathVariable,
+     * lanza una exception
      *
-     * @return objeto generico de tipo ResponseEntity, formado por un objeto de tipo EmployeeDto,
-     * que contiene el nuevo empleado creado, junto con enlaces agregados
+     * Despues accede a la capa de servicio PictureServiceImpl mediante su interface
+     * IPictureService y hace uso del servicio 'savePicture(newPicture)' para salvar el nuevo objeto creado
+     *
+     * Antes de salvar el nuevo objeto Picture, comprueba la capacidad de la tienda,
+     * para ello accede al servicio currentShopCapacity(shopId) de la interface IShopService.
+     * En caso de que la tienda no tenga capacidad suficiente, informa con el mensaje correspondiente
+     * y no hace el salvado del objeto Picture
+     *
+     * @param newPicture, tipo Picture anotado con @RequestBody para indicar que el parametro de metodo
+     *                    debe estar vinculada al cuerpo de la solicitud web.
+     *                    El cuerpo de la solicitud se pasa en formato JSON, segun el tipo de contenido de la solicitud.
+     *                    Se aplica la validacion automatica anotando el argumento con @Valid
+     *
+     * @param shopId, tipo Long anotado con @PathVariable para indicar que es un parametro de metodo
+     *                y debe estar vinculado a una variable de tipo plantilla de URI (URI template)
+     *                Indica el id de la tienda en la que se quiere salvar un nuevo objeto de tipo Picture
+     *
+     * @return objeto generico de tipo ResponseEntity, formado por un objeto de tipo PictureDto,
+     * que contiene el nuevo cuadro creado, junto con enlaces agregados
      */
     @PostMapping("/shops/{id}/pictures")
     public ResponseEntity<?> newPicture(@Valid @RequestBody Picture newPicture, @PathVariable(name="id") Long shopId) {
@@ -227,15 +254,24 @@ public class ShopController {
     }
 
     /**
-     * Representa el mapeo de una peticion HTTP DELETE, a la URL http://localhost:8081/employees/{valor numerico}
+     * Representa el mapeo de una peticion HTTP DELETE, a la URL
+     * http://shops:8081/shops/{id}/pictures}
      *
-     * Accede a la capa de servicio EmployeeServiceImpl mediante su interface IEmployeeService
-     * y hace uso de los metodos 'findEmployeeById(id)' para recuperar el objeto de tipo EmployeeDto,
-     * y deleteEmployee(id), para eliminar el empleado determinado por el valor numerico pasado en la URL
+     * Accede a la capa de servicio ShopServiceImpl mediante su interface IShopService
+     * y hace uso del servicio 'findShopById(shopId)' para recuperar un objeto de tipo Shop
+     * cuyo id coincida con el shopId pasado en el PathVariable
+     *
+     * En caso de que no existiese ningun objeto Shop con el shopId especificado en el PathVariable,
+     * lanza una exception
+     *
+     * Despues accede a la capa de servicio PictureServiceImpl mediante su interface IPictureService
+     * y hace uso del servicio 'firePictures(shop.getPictures())' para eliminar en lote
+     * (deleteInBatch, en una sola query) el listado de cuadros asociados a una determinada tienda,
+     * El servicio es parametrizado con el listado de cuadros a eliminar
      *
      * @param shopId, tipo Long anotado con @PathVariable para indicar que es un parametro de metodo
      *            y debe estar vinculado a una variable de tipo plantilla de URI (URI template)
-     *            Indica el id del empleado que se quiere eliminar
+     *            Indica el id de la tienda concreta en la que se eliminaran todos sus cuadros
      *
      * @return objeto generico de tipo ResponseEntity, con una respuesta de operacion valida
      */

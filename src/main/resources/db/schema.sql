@@ -3,8 +3,8 @@ DROP table IF EXISTS  `shop`;
 
 CREATE TABLE `shop` (
   `id_shop` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(250) NOT NULL DEFAULT '',
-  `capacity` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(250) NOT NULL DEFAULT 'White Collar',
+  `capacity` int(11) NOT NULL DEFAULT 10,
   PRIMARY KEY (`id_shop`)
 );
 

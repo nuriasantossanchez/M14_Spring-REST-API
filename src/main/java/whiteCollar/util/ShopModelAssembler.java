@@ -31,9 +31,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  *
  * @Component
  * Indica que una clase es un "componente".
- * Estas clases se consideran candidatas para la detección automática cuando se utiliza una configuración
+ * Estas clases se consideran candidatas para la deteccion automatica cuando se utiliza una configuracion
  * basada en anotaciones y un escaneo de classpath.
- * También se pueden considerar otras anotaciones a nivel de clase como identificación de un componente,
+ * Tambien se pueden considerar otras anotaciones a nivel de clase como identificacion de un componente,
  * normalmente un tipo especial de componente: por ejemplo, la anotación @Repository
  *
  */
@@ -61,6 +61,13 @@ public class ShopModelAssembler implements RepresentationModelAssembler<Shop, En
                         linkTo(methodOn(ShopController.class).allShops()).withRel("all"));
     }
 
+    /**
+     * Realizar el mapeo de objetos de tipo Shop a objetos de tipo ShopDto, haciendo uso de un objeto
+     * de tipo ModelMapper qu es injectado en la clase mediante la anotacion @Autowired
+     *
+     * @param shop, objeto de tipo Shop
+     * @return objeto de tipo ShopDto
+     */
     public ShopDto convertToDto(Shop shop) {
         ShopDto shopDto = modelMapper.map(shop, ShopDto.class);
         return shopDto;

@@ -37,10 +37,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  *
  * @Component
  * Indica que una clase es un "componente".
- * Estas clases se consideran candidatas para la detección automática cuando se utiliza una configuración
+ * Estas clases se consideran candidatas para la detección automatica cuando se utiliza una configuracion
  * basada en anotaciones y un escaneo de classpath.
- * También se pueden considerar otras anotaciones a nivel de clase como identificación de un componente,
- * normalmente un tipo especial de componente: por ejemplo, la anotación @Repository
+ * Tambien se pueden considerar otras anotaciones a nivel de clase como identificacion de un componente,
+ * normalmente un tipo especial de componente: por ejemplo, la anotacion @Repository
  *
  */
 @Component
@@ -51,7 +51,7 @@ public class PictureModelAssembler implements RepresentationModelAssembler<Pictu
 
     /**
      * Metodo abstracto de la interfaz RepresentationModelAssembler
-     * Convierte un objeto de tipo Picture en un EntityModel de tipos PictureDto.
+     * Convierte un objeto de tipo Picture en un EntityModel de tipo PictureDto.
      * El objeto EntityModel envuelve un objeto de dominio y le agrega enlaces
      *
      * @param picture, objeto de tipo Picture
@@ -68,8 +68,17 @@ public class PictureModelAssembler implements RepresentationModelAssembler<Pictu
                 linkTo(methodOn(ShopController.class).allPicturesByShop(picture.getShop().getId())).withRel("all"));
     }
 
+    /**
+     * Realizar el mapeo de objetos de tipo Picture a objetos de tipo PictureDto, haciendo uso de un objeto
+     * de tipo ModelMapper qu es injectado en la clase mediante la anotacion @Autowired
+     *
+     * @param picture, objeto de tipo Picture
+     * @return objeto de tipo PictureDto
+     */
     public PictureDto convertToDto(Picture picture){
         PictureDto pictureDto = modelMapper.map(picture, PictureDto.class);
+        pictureDto.setIdPicture(picture.getId());
+        pictureDto.setShopCapacity(picture.getShop().getCapacity());
         return pictureDto;
     }
 

@@ -6,7 +6,7 @@ package whiteCollar.controller.exception;
  * Extiende RuntimeException, de tipo unchecked.
  *
  * La exception es lanzada en la ejecucion de ciertos metodos, en los casos en los que
- * la peticion de recuperar un objeto de tipo Employee pueda no devolver ningun resultado
+ * la peticion de recuperar un objeto de tipo Shop pueda no devolver ningun resultado
  */
 public class ShopNotFoundException extends RuntimeException {
 

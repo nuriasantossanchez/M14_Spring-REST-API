@@ -13,7 +13,15 @@ import java.util.List;
  * La anotacion @Entity indica que la clase es una entidad.
  *
  * La anotacion @Table indica que la clase sera mapeada a una tabla y persistida, en este caso,
- * a una base de datos embebida de tipo H2.
+ * tanto en una base de datos embebida de tipo H2, como en una base de datos MySQL.
+ * (ver application.properties, donde estan definidas ambas conexiones)
+ *
+ * La anotacion @OneToMany especifica una asociacion de varios valores con multiplicidad de uno a varios,
+ * en este caso, la asociacion es con la entidad Picture, donde multiples una unica entidad de tipo Shop
+ * puede estar asociada a multiples valores de tipo Picture.
+ *
+ * Al ser la relacion bidireccional, el elemento mappedBy debe usarse para especificar
+ * el campo de relacion o la propiedad de la entidad que es propietaria de la relacion.
  */
 @Entity
 @Table(name="shop") //en caso que la tabla sea diferente
@@ -26,12 +34,12 @@ public class Shop implements Serializable {
     private Long id;
 
     @Column(name = "name")//no hace falta si se llama igual
-    @NotEmpty(message = "\"Shop Name\" is required")
+    @NotEmpty(message = "name is required")
     private String name;
 
 
     @Column(name = "capacity")
-    @NotNull(message = "\"Shop Capacity\" is required")
+    @NotNull(message = "capacity is required")
     private Long capacity;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shop", fetch = FetchType.LAZY)

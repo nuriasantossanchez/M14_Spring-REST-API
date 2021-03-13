@@ -11,13 +11,12 @@ import java.util.Optional;
  */
 public interface IShopService {
 
-    //Metodos del CRUD
     List<Shop> listShops(); //List All Shops
 
     Shop saveShop(Shop shop); //Save a Shop CREATE
 
     Optional<Shop> findShopById(Long id); //Find a Shop by Id READ
 
-    Long currentShopCapacity(Long idShop); //Get the current capacity of a Shop
+    Long currentShopCapacity(Long idShop); //Get the current capacity from a Shop
 
 }

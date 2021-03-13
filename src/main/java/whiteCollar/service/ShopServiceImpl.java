@@ -13,9 +13,10 @@ import java.util.Optional;
  *
  * Anotaciones:
  * @Service
- * Indica que la clase es un "Servicio", esto es, una operación ofrecida como una interface que esta solo en el modelo,
+ * Indica que la clase es un "Servicio", esto es, una operacion ofrecida como una interface que esta solo en el modelo,
  * sin un estado encapsulado.
- * Sirve como una especialización de @Component, lo que permite que las clases de implementacion se detecten
+ *
+ * Sirve como una especializacion de @Component, lo que permite que las clases de implementacion se detecten
  * automaticamente a traves del escaneo del classpath
  *
  * @Autowired

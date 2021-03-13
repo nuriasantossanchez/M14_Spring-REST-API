@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Clase de la capa Controller, dentro del paquete Exception
  *
  * La anotacion @ControllerAdvice es una especializacion de @Component para clases que declaran
- * los métodos @ExceptionHandler, @InitBinder o @ModelAttribute para compartir entre varias clases
+ * los metodos @ExceptionHandler, @InitBinder o @ModelAttribute para compartir entre varias clases
  * de @Controller.
  *
  * Las clases anotadas con @ControllerAdvice pueden declararse explicitamente como Spring beans o
@@ -25,7 +25,7 @@ class ShopNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(ShopNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(ShopNotFoundException ex) {
+    String shopNotFoundHandler(ShopNotFoundException ex) {
         return ex.getMessage();
     }
 }

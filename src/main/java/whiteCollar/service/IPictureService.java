@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface IPictureService {
 
-    public List<Picture> listPicturesByShop(Shop shop);  //List All Pictures By Shop
+    public List<Picture> listPicturesByShop(Shop shop);  //List All Pictures from a Shop
 
-    Picture savePicture(Picture picture); //Save a picture in Shop CREATE
+    Picture savePicture(Picture picture); //Save one picture in one Shop CREATE
 
-    void firePictures(List<Picture> pictures); //Delete All Pictures By Shop
+    void firePictures(List<Picture> pictures); //Delete All Pictures from a Shop
 
 
 }

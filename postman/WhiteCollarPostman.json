@@ -143,13 +143,69 @@
 			"response": []
 		},
 		{
+			"name": "POST_koByRequesBody /shops",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "POST /shops/{id}/pictures",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Garçon à la pipe\",\r\n    \"author\":\"Pablo Picasso\",\r\n    \"price\":11104200000\r\n}",
+					"raw": "{\r\n    \"name\":\"Cafe Terrace at Night\",\r\n    \"author\":\"Vincent Van Gogh\",\r\n    \"price\":11104200000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/shops/2/pictures",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"shops",
+						"2",
+						"pictures"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST_ anonymous /shops/{id}/pictures",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"En el Eden\",\r\n    \"author\":\"\",\r\n    \"price\":11700000\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -236,7 +292,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Bandera\"\r\n}",
+					"raw": "{\r\n    \"author\":\"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

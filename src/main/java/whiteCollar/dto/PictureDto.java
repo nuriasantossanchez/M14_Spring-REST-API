@@ -11,22 +11,23 @@ import java.util.Date;
 /**
  * Clase de la capa de dominio, implementa el patron Data Transfer Object (DTO Pattern) mediante la
  * creacion de un objeto plano (POJO) con una serie de atributos que puedan ser enviados o recuperados
- * del servidor en una sola invocación (de tal forma que un DTO puede contener información de multiples
+ * del servidor en una sola invocacion (de tal forma que un DTO puede contener informacion de multiples
  * fuentes o tablas y concentrarlas en una unica clase simple, esto es, crear estructuras de datos
- * independientes del modelo de datos, para transmitir información entre un cliente y un servidor)
+ * independientes del modelo de datos, para transmitir informacion entre un cliente y un servidor)
  *
  * Anotaciones:
  * @Component
  * Indica que una clase es un "componente".
- * Estas clases se consideran candidatas para la deteccion automatica cuando se utiliza una configuración
+ * Estas clases se consideran candidatas para la deteccion automatica cuando se utiliza una configuracion
  * basada en anotaciones y un escaneo de classpath.
- * También se pueden considerar otras anotaciones a nivel de clase como identificación de un componente,
- * normalmente un tipo especial de componente: por ejemplo, la anotación @Repository
+ * Tambien se pueden considerar otras anotaciones a nivel de clase como identificacion de un componente,
+ * normalmente un tipo especial de componente: por ejemplo, la anotacion @Repository
  */
 public class PictureDto extends ResponseDto{
 
-    private Long id;
+    private Long idPicture;
     private Long idShop;
+    private Long shopCapacity;
     private String name;
     private String author;
     private BigDecimal price;
@@ -37,12 +38,12 @@ public class PictureDto extends ResponseDto{
     public PictureDto() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdPicture() {
+        return idPicture;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPicture(Long idPicture) {
+        this.idPicture = idPicture;
     }
 
     public Long getIdShop() {
@@ -51,6 +52,14 @@ public class PictureDto extends ResponseDto{
 
     public void setIdShop(Long idShop) {
         this.idShop = idShop;
+    }
+
+    public Long getShopCapacity() {
+        return shopCapacity;
+    }
+
+    public void setShopCapacity(Long shopCapacity) {
+        this.shopCapacity = shopCapacity;
     }
 
     public String getName() {
@@ -88,7 +97,9 @@ public class PictureDto extends ResponseDto{
     @Override
     public String toString() {
         return "PictureDto {" +
-                "id=" + id +
+                "idPicture=" + idPicture +
+                ", idShop=" + idShop +
+                ", shopCapacity=" + shopCapacity +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", price=" + price +
